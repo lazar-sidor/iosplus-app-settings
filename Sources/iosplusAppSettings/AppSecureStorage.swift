@@ -27,8 +27,12 @@ public protocol AppSecureStorage {
     func clearAll()
 }
 
-public final class SystemAppSecureStorage: AppSecureStorage {
+public final class SystemAppSecureStorage: NSObject, AppSecureStorage {
     private let keychain = KeychainSwift()
+
+    public override init() {
+        super.init()
+    }
 
     public func item(for entry: AppSecureStorageEntry) -> String? {
         keychain.get(entry.entryKey)
