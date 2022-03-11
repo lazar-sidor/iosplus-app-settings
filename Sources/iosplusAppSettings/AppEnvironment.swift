@@ -18,7 +18,7 @@ final public class SingleSelectionSettingsEntry: AppSettingsEntry {
     private let defaultOption: AppSettingOption
     private let optionsGroupName: String
     
-    init(keyValueStore: PersistentKeyValueStore, options: [AppSettingOption], defaultOption: AppSettingOption, optionsGroupName: String) {
+    public init(keyValueStore: PersistentKeyValueStore, options: [AppSettingOption], defaultOption: AppSettingOption, optionsGroupName: String) {
         self.keyValueStore = keyValueStore
         self.options = options
         self.defaultOption = defaultOption

@@ -9,7 +9,7 @@ import UIKit
 public final class AppLogLevel: AppSettingsEntry {
     private let keyValueStore: PersistentKeyValueStore
     
-    init(keyValueStore: PersistentKeyValueStore) {
+    public init(keyValueStore: PersistentKeyValueStore) {
         self.keyValueStore = keyValueStore
     }
         

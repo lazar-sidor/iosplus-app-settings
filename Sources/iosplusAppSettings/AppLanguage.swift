@@ -9,7 +9,7 @@ import UIKit
 final public class AppLanguageType: NSObject {
     var localeIdentifier: String
     
-    convenience init(localeId: String) {
+    public convenience init(localeId: String) {
         self.init()
         self.localeIdentifier = localeId
     }
@@ -19,11 +19,11 @@ final public class AppLanguageType: NSObject {
         super.init()
     }
     
-    static func defaultValue() -> AppLanguageType {
+    public static func defaultValue() -> AppLanguageType {
         return AppLanguageType(localeId: "en_US")
     }
     
-    func abbreviation() -> String {
+    public func abbreviation() -> String {
         let code = languageCode()
         let country = countryCode()
         if code.lowercased() == country.lowercased() {
@@ -33,17 +33,17 @@ final public class AppLanguageType: NSObject {
         return localeIdentifier.lowercased()
     }
     
-    func languageCode() -> String {
+    public func languageCode() -> String {
         let locale = Locale(identifier: localeIdentifier)
         return locale.languageCode!
     }
     
-    func countryCode() -> String {
+    public func countryCode() -> String {
         let locale = Locale(identifier: localeIdentifier)
         return locale.regionCode!
     }
     
-    func lprojName() -> String {
+    public func lprojName() -> String {
         let code = languageCode()
         let country = countryCode()
         if code.lowercased() == country.lowercased() {
@@ -54,27 +54,27 @@ final public class AppLanguageType: NSObject {
     }
 }
     
-final public class AppLanguage {
+public final class AppLanguage {
     private var supportedLocaleIdentifiers: [String] = []
     private var keyValueStore: PersistentKeyValueStore
     
-    init() {
+    public init() {
         supportedLocaleIdentifiers = NSLocale.availableLocaleIdentifiers
         self.keyValueStore = PersistentKeyValueStore(defaults: UserDefaults.standard)
     }
     
-    convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore) {
+    public convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore) {
         self.init()
         self.supportedLocaleIdentifiers = localeIdentifiers
         self.keyValueStore = keyValueStore
     }
     
-    func currentLanguageCode() -> String {
+    public func currentLanguageCode() -> String {
         let value = (currentValue() as! AppLanguageType).languageCode()
         return value
     }
     
-    func currentLocale() -> Locale {
+    public func currentLocale() -> Locale {
         let localeId: String = (currentValue() as! AppLanguageType).localeIdentifier
         return Locale(identifier: localeId)
     }

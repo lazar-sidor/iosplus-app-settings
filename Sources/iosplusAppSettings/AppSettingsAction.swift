@@ -9,7 +9,7 @@ public struct AppSettingsAction {
     var url: URL?
     var title: String
 
-    func isExternalLink() -> Bool {
+    public func isExternalLink() -> Bool {
         return url != nil
     }
 }

@@ -37,15 +37,15 @@ public final class PersistentKeyValueStore {
         return value?.first
     }
 
-    func hasValue(forKey key: String) -> Bool {
+    public func hasValue(forKey key: String) -> Bool {
         return defaults.value(forKey: key) != nil
     }
 
-    func removeValue(forKey key: String) {
+    public func removeValue(forKey key: String) {
         defaults.removeObject(forKey: key)
     }
 
-    func clear() {
+    public func clear() {
         for key in defaults.dictionaryRepresentation().keys {
             defaults.removeObject(forKey: key)
         }

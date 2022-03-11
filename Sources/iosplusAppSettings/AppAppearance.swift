@@ -11,7 +11,7 @@ public enum AppAppearanceType: String, Codable {
     case light
     case dark
     
-    static func defaultValue() -> AppAppearanceType {
+    public static func defaultValue() -> AppAppearanceType {
         return .system
     }
 }
@@ -19,11 +19,11 @@ public enum AppAppearanceType: String, Codable {
 public final class AppAppearance {
     private let keyValueStore: PersistentKeyValueStore
     
-    init(keyValueStore: PersistentKeyValueStore) {
+    public init(keyValueStore: PersistentKeyValueStore) {
         self.keyValueStore = keyValueStore
     }
 
-    func isDark() -> Bool {
+    public func isDark() -> Bool {
         let value: AppAppearanceType = currentValue() as! AppAppearanceType
         if value == .system {
             if #available(iOS 12.0, *) {

@@ -8,15 +8,15 @@ import UIKit
 
 
 public final class AppLogManager: NSObject {
-    static var shared: AppLogManager?
+    public static var shared: AppLogManager?
     private var appLogLevel = LogLevel.defaultValue()
     
-    init(_ loggers: [LoggingServiceProtocol], appLogLevel: LogLevel) {
+    public init(_ loggers: [LoggingServiceProtocol], appLogLevel: LogLevel) {
         LoggingService.shared = LoggingService(loggers)
         self.appLogLevel = appLogLevel
     }
     
-    func log(_ category: LogCategory?, level: LogLevel, _ msg: String?) {
+    public func log(_ category: LogCategory?, level: LogLevel, _ msg: String?) {
         if level.rawValue < appLogLevel.rawValue {
             // If configured app log level is bigger the one requested to log message, then don't log anything
             return
