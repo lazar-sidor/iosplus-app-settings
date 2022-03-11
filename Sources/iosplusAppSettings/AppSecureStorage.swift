@@ -9,7 +9,7 @@ public enum AppSecureStorageEntry {
     case accessToken
     case custom(key: String)
     
-    var entryKey: String {
+    public var entryKey: String {
         switch self {
         case .accessToken: return "Access-Token"
         case .custom(let key): return key

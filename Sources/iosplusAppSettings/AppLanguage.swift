@@ -6,7 +6,7 @@
 
 import UIKit
 
-final public class AppLanguageType: NSObject {
+public final class AppLanguageType: NSObject {
     var localeIdentifier: String
     
     public convenience init(localeId: String) {
@@ -14,7 +14,7 @@ final public class AppLanguageType: NSObject {
         self.localeIdentifier = localeId
     }
     
-    override init() {
+    public override init() {
         self.localeIdentifier = "en_US"
         super.init()
     }

@@ -12,12 +12,12 @@ private enum AppDebugSettingsCellIdentifier: String {
     case actionCellId
 }
 
-final public class AppDebugSettingsViewController: UITableViewController {
+public final class AppDebugSettingsViewController: UITableViewController {
     var settings: [AppSettingsEntry] = []
     var actions: [AppSettingsAction] = []
     var selection: ((_ updated: Bool) -> Void)?
     
-    static func showAppSettings(_ settings: [AppSettingsEntry], actions: [AppSettingsAction] = [], context: UIViewController, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
+    public static func showAppSettings(_ settings: [AppSettingsEntry], actions: [AppSettingsAction] = [], context: UIViewController, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
         let controller = AppDebugSettingsViewController(settings: settings, actions: actions)
         controller.selection = selectionBlock
         
@@ -27,7 +27,7 @@ final public class AppDebugSettingsViewController: UITableViewController {
         context.present(settingsNavigation, animated: true, completion: nil)
     }
     
-    convenience init(settings: [AppSettingsEntry], actions: [AppSettingsAction]) {
+    public convenience init(settings: [AppSettingsEntry], actions: [AppSettingsAction]) {
         if #available(iOS 13.0, *) {
             self.init(style: .insetGrouped)
         } else {

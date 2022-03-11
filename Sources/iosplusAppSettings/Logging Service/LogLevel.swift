@@ -4,14 +4,14 @@
 
 import Foundation
 
-enum LogLevel: Int, Codable {
+public enum LogLevel: Int, Codable {
     case verbose = 0
     case debug = 1
     case info = 2
     case warning = 3
     case error = 4
     
-    static func defaultValue() -> LogLevel {
+    public static func defaultValue() -> LogLevel {
         var level: LogLevel = .warning
 #if DEBUG
     level = .verbose
