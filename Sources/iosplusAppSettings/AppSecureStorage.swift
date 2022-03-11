@@ -5,7 +5,7 @@
 import UIKit
 import KeychainSwift
 
-enum AppSecureStorageEntry {
+public enum AppSecureStorageEntry {
     case accessToken
     case custom(key: String)
     
@@ -17,7 +17,7 @@ enum AppSecureStorageEntry {
     }
 }
 
-protocol AppSecureStorage {
+public protocol AppSecureStorage {
     func item(for entry: AppSecureStorageEntry) -> String?
     func exists(for entry: AppSecureStorageEntry) -> Bool
     func save(_ value: String, forEntry entry: AppSecureStorageEntry)
@@ -27,34 +27,34 @@ protocol AppSecureStorage {
     func clearAll()
 }
 
-final public class SystemAppSecureStorage: AppSecureStorage {
+public final class SystemAppSecureStorage: AppSecureStorage {
     private let keychain = KeychainSwift()
 
-    func item(for entry: AppSecureStorageEntry) -> String? {
+    public func item(for entry: AppSecureStorageEntry) -> String? {
         keychain.get(entry.entryKey)
     }
 
-    func exists(for entry: AppSecureStorageEntry) -> Bool {
+    public func exists(for entry: AppSecureStorageEntry) -> Bool {
         item(for: entry) != nil
     }
 
-    func save(_ value: String, forEntry entry: AppSecureStorageEntry) {
+    public func save(_ value: String, forEntry entry: AppSecureStorageEntry) {
         keychain.set(value, forKey: entry.entryKey)
     }
 
-    func saveBool(_ value: Bool, forEntry entry: AppSecureStorageEntry) {
+    public func saveBool(_ value: Bool, forEntry entry: AppSecureStorageEntry) {
         keychain.set(value, forKey: entry.entryKey)
     }
 
-    func delete(_ entry: AppSecureStorageEntry) {
+    public func delete(_ entry: AppSecureStorageEntry) {
         keychain.delete(entry.entryKey)
     }
 
-    func clearAll() {
+    public func clearAll() {
         keychain.clear()
     }
 
-    func clearAllExceptToken() {
+    public func clearAllExceptToken() {
         for key in keychain.allKeys where key != AppSecureStorageEntry.accessToken.entryKey {
             keychain.delete(key)
         }

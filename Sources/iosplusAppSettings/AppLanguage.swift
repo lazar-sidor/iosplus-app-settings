@@ -81,15 +81,15 @@ final public class AppLanguage {
 }
 
 extension AppLanguage: AppSettingsEntry {
-    func persistentKey() -> String {
+    public func persistentKey() -> String {
         return String(describing: AppLanguage.self)
     }
 
-    func persistentStore() -> PersistentKeyValueStore {
+    public func persistentStore() -> PersistentKeyValueStore {
         return keyValueStore
     }
 
-    func defaultValue() -> Any? {
+    public func defaultValue() -> Any? {
         if supportedLocaleIdentifiers.contains(Locale.current.identifier) {
             return AppLanguageType(localeId: Locale.current.identifier)
         }
@@ -97,7 +97,7 @@ extension AppLanguage: AppSettingsEntry {
         return AppLanguageType.defaultValue()
     }
 
-    func currentValue() -> Any? {
+    public func currentValue() -> Any? {
         let key = persistentKey()
         if keyValueStore.hasValue(forKey: key) {
             return AppLanguageType(localeId: keyValueStore.value(forKey: key)!)
@@ -106,24 +106,24 @@ extension AppLanguage: AppSettingsEntry {
         return AppLanguageType.defaultValue()
     }
     
-    func supportedOptions() -> [Any] {
+    public func supportedOptions() -> [Any] {
         return supportedLocaleIdentifiers
     }
 
-    func title() -> String {
+    public func title() -> String {
         return "Language"
     }
 
-    func selectionType() -> AppSettingSelectionType {
+    public func selectionType() -> AppSettingSelectionType {
         return .singleSelection
     }
 
-    func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
+    public func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
         let localeId: String = supportedLocaleIdentifiers[index]
         return localeId == (currentValue() as! AppLanguageType).localeIdentifier
     }
 
-    func displayNameForOptionAtIndex(_ index: Int) -> String {
+    public func displayNameForOptionAtIndex(_ index: Int) -> String {
         let localeId: String = supportedLocaleIdentifiers[index]
         let locale = Locale(identifier: localeId)
 
@@ -142,12 +142,12 @@ extension AppLanguage: AppSettingsEntry {
         return localeId
     }
 
-    func saveWithSupportedValue(at index: Int) {
+    public func saveWithSupportedValue(at index: Int) {
         let localeId: String = supportedOptions()[index] as! String
         keyValueStore.insert(localeId, forKey: persistentKey())
     }
 
-    func clear() {
+    public func clear() {
         keyValueStore.removeValue(forKey: persistentKey())
     }
 }

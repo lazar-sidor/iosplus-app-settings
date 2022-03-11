@@ -13,15 +13,15 @@ public final class AppLogLevel: AppSettingsEntry {
         self.keyValueStore = keyValueStore
     }
         
-    func persistentKey() -> String {
+    public func persistentKey() -> String {
         return String(describing: AppLogLevel.self)
     }
     
-    func defaultValue() -> Any? {
+    public func defaultValue() -> Any? {
         return LogLevel.defaultValue()
     }
     
-    func currentValue() -> Any? {
+    public func currentValue() -> Any? {
         if keyValueStore.hasValue(forKey: persistentKey()) {
             return LogLevel(rawValue: keyValueStore.value(forKey: persistentKey())!)!
         }
@@ -29,19 +29,19 @@ public final class AppLogLevel: AppSettingsEntry {
         return LogLevel.defaultValue()
     }
     
-    func persistentStore() -> PersistentKeyValueStore {
+    public func persistentStore() -> PersistentKeyValueStore {
         return keyValueStore
     }
     
-    func title() -> String {
+    public func title() -> String {
         return "Logging"
     }
     
-    func selectionType() -> AppSettingSelectionType {
+    public func selectionType() -> AppSettingSelectionType {
         return .singleSelection
     }
     
-    func supportedOptions() -> [Any] {
+    public func supportedOptions() -> [Any] {
         return [
             LogLevel.verbose.rawValue,
             LogLevel.debug.rawValue,
@@ -51,23 +51,23 @@ public final class AppLogLevel: AppSettingsEntry {
         ]
     }
     
-    func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
+    public func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
         let option = supportedOptions()[index]
         return LogLevel.init(rawValue: option as! Int) == currentValue() as? LogLevel
     }
     
-    func displayNameForOptionAtIndex(_ index: Int) -> String {
+    public func displayNameForOptionAtIndex(_ index: Int) -> String {
         let option = supportedOptions()[index]
         return LogLevel.init(rawValue: option as! Int)!.title
     }
     
-    func saveWithSupportedValue(at index: Int) {
+    public func saveWithSupportedValue(at index: Int) {
         let option = supportedOptions()[index]
         let savedValue = LogLevel.init(rawValue: option as! Int)!
         keyValueStore.insert(savedValue, forKey: persistentKey())
     }
     
-    func clear() {
+    public func clear() {
         keyValueStore.removeValue(forKey: persistentKey())
     }
 }

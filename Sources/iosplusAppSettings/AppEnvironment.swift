@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol AppSettingOption {
+public protocol AppSettingOption {
     var intValue: Int { get }
     var titleValue: String { get }
 }
@@ -25,15 +25,15 @@ final public class SingleSelectionSettingsEntry: AppSettingsEntry {
         self.optionsGroupName = optionsGroupName
     }
         
-    func persistentKey() -> String {
+    public func persistentKey() -> String {
         return String(describing: defaultOption.self)
     }
     
-    func defaultValue() -> Any? {
+    public func defaultValue() -> Any? {
         return defaultOption.intValue
     }
     
-    func currentValue() -> Any? {
+    public func currentValue() -> Any? {
         if keyValueStore.hasValue(forKey: persistentKey()) {
             return Int(keyValueStore.value(forKey: persistentKey())!)!
         }
@@ -41,39 +41,39 @@ final public class SingleSelectionSettingsEntry: AppSettingsEntry {
         return defaultOption.intValue
     }
     
-    func persistentStore() -> PersistentKeyValueStore {
+    public func persistentStore() -> PersistentKeyValueStore {
         return keyValueStore
     }
     
-    func title() -> String {
+    public func title() -> String {
         return optionsGroupName
     }
     
-    func selectionType() -> AppSettingSelectionType {
+    public func selectionType() -> AppSettingSelectionType {
         return .singleSelection
     }
     
-    func supportedOptions() -> [Any] {
+    public func supportedOptions() -> [Any] {
         return options.map { $0.titleValue }
     }
     
-    func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
+    public func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
         let option = options[index]
         return option.intValue == currentValue() as! Int
     }
     
-    func displayNameForOptionAtIndex(_ index: Int) -> String {
+    public func displayNameForOptionAtIndex(_ index: Int) -> String {
         let option = options[index]
         return option.titleValue.capitalized
     }
     
-    func saveWithSupportedValue(at index: Int) {
+    public func saveWithSupportedValue(at index: Int) {
         let option = options[index]
         let savedValue = option.intValue
         keyValueStore.insert(savedValue, forKey: persistentKey())
     }
     
-    func clear() {
+    public func clear() {
         keyValueStore.removeValue(forKey: persistentKey())
     }
 }

@@ -5,11 +5,11 @@
 
 import UIKit
 
-enum AppSettingSelectionType: Int {
+public enum AppSettingSelectionType: Int {
     case singleSelection
 }
 
-protocol AppSettingsInterface {
+public protocol AppSettingsInterface {
     func persistentKey() -> String
     func currentValue() -> Any?
     func persistentStore() -> PersistentKeyValueStore
@@ -23,4 +23,4 @@ protocol AppSettingsInterface {
     func clear()
 }
 
-typealias AppSettingsEntry = AppSettingsInterface
+public typealias AppSettingsEntry = AppSettingsInterface

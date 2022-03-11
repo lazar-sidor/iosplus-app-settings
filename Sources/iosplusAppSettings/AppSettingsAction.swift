@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct AppSettingsAction {
+public struct AppSettingsAction {
     var url: URL?
     var title: String
 

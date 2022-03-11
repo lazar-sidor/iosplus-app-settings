@@ -6,7 +6,7 @@
 
 import UIKit
 
-enum AppAppearanceType: String, Codable {
+public enum AppAppearanceType: String, Codable {
     case system
     case light
     case dark
@@ -38,15 +38,15 @@ public final class AppAppearance {
 }
 
 extension AppAppearance: AppSettingsEntry {
-    func persistentKey() -> String {
+    public func persistentKey() -> String {
         return String(describing: AppAppearance.self)
     }
 
-    func defaultValue() -> Any? {
+    public func defaultValue() -> Any? {
         return AppAppearanceType.defaultValue()
     }
 
-    func currentValue() -> Any? {
+    public func currentValue() -> Any? {
         if keyValueStore.hasValue(forKey: persistentKey()) {
             return AppAppearanceType(rawValue: keyValueStore.value(forKey: persistentKey())!)!
         }
@@ -54,28 +54,28 @@ extension AppAppearance: AppSettingsEntry {
         return AppAppearanceType.defaultValue()
     }
 
-    func persistentStore() -> PersistentKeyValueStore {
+    public func persistentStore() -> PersistentKeyValueStore {
         return keyValueStore
     }
 
-    func title() -> String {
+    public func title() -> String {
         return "Appearance"
     }
 
-    func selectionType() -> AppSettingSelectionType {
+    public func selectionType() -> AppSettingSelectionType {
         return .singleSelection
     }
 
-    func supportedOptions() -> [Any] {
+    public func supportedOptions() -> [Any] {
         return [AppAppearanceType.system.rawValue, AppAppearanceType.light.rawValue, AppAppearanceType.dark.rawValue]
     }
 
-    func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
+    public func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
         let option = supportedOptions()[index]
         return AppAppearanceType.init(rawValue: option as! String) == currentValue() as? AppAppearanceType
     }
 
-    func displayNameForOptionAtIndex(_ index: Int) -> String {
+    public func displayNameForOptionAtIndex(_ index: Int) -> String {
         let option = supportedOptions()[index]
         if option is String {
             return (option as! String).capitalized
@@ -84,13 +84,13 @@ extension AppAppearance: AppSettingsEntry {
         return ""
     }
 
-    func saveWithSupportedValue(at index: Int) {
+    public func saveWithSupportedValue(at index: Int) {
         let option = supportedOptions()[index]
         let savedValue = AppAppearanceType.init(rawValue: option as! String)!
         keyValueStore.insert(savedValue, forKey: persistentKey())
     }
 
-    func clear() {
+    public func clear() {
         keyValueStore.removeValue(forKey: persistentKey())
     }
 }

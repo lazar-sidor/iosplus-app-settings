@@ -5,21 +5,21 @@
 
 import Foundation
 
-final public class PersistentKeyValueStore {
+public final class PersistentKeyValueStore {
     private let defaults: UserDefaults
     private lazy var jsonDecoder = JSONDecoder()
     private lazy var jsonEncoder = JSONEncoder()
 
-    init(defaults: UserDefaults = .standard) {
+    public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
     
-    convenience init(appGroup: String) {
+    public convenience init(appGroup: String) {
         let suite = UserDefaults.init(suiteName: appGroup)
         self.init(defaults: suite!)
     }
 
-    func insert<T: Codable>(_ value: T, forKey key: String) {
+    public func insert<T: Codable>(_ value: T, forKey key: String) {
         // Wrapping value in array to enable encoding of primitives
         // swiftlint:disable:next force_try
         let value = try! jsonEncoder.encode([value])
@@ -27,7 +27,7 @@ final public class PersistentKeyValueStore {
         defaults.synchronize()
     }
 
-    func value<T: Codable>(forKey key: String) -> T? {
+   public func value<T: Codable>(forKey key: String) -> T? {
         // Wrapping value in array to enable encoding of primitives
         guard let encodedValue = defaults.value(forKey: key) as? Data else {
             return nil
