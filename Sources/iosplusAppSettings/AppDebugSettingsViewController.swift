@@ -12,13 +12,20 @@ private enum AppDebugSettingsCellIdentifier: String {
     case actionCellId
 }
 
+public struct AppSettingsViewConfiguration {
+    let actions: [AppSettingsAction] = []
+    let settings: [AppSettingsEntry] = []
+    let pageTitle: String? = nil
+}
+
 public final class AppDebugSettingsViewController: UITableViewController {
     var settings: [AppSettingsEntry] = []
     var actions: [AppSettingsAction] = []
     var selection: ((_ updated: Bool) -> Void)?
+    var pageTitle: String? = nil
     
-    public static func showAppSettings(_ settings: [AppSettingsEntry], actions: [AppSettingsAction] = [], context: UIViewController, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
-        let controller = AppDebugSettingsViewController(settings: settings, actions: actions)
+    public static func showAppSettings(configuration: AppSettingsViewConfiguration, context: UIViewController, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
+        let controller = AppDebugSettingsViewController(configuration: configuration)
         controller.selection = selectionBlock
         
         let settingsNavigation = UINavigationController.init(rootViewController: controller)
@@ -27,15 +34,16 @@ public final class AppDebugSettingsViewController: UITableViewController {
         context.present(settingsNavigation, animated: true, completion: nil)
     }
     
-    public convenience init(settings: [AppSettingsEntry], actions: [AppSettingsAction]) {
+    public convenience init(configuration: AppSettingsViewConfiguration) {
         if #available(iOS 13.0, *) {
             self.init(style: .insetGrouped)
         } else {
             // Fallback on earlier versions
             self.init(style: .grouped)
         }
-        self.settings = settings
-        self.actions = actions
+        self.settings = configuration.settings
+        self.actions = configuration.actions
+        self.pageTitle = configuration.pageTitle
     }
     
     override init(style: UITableView.Style) {
@@ -119,6 +127,11 @@ private extension AppDebugSettingsViewController {
         let action = actions[indexPath.row]
         if action.isExternalLink() {
             showSafaryWebView(url: action.url, context: self)
+            return
+        }
+
+        if let selection = action.selection {
+            selection(action)
         }
     }
 
@@ -142,7 +155,11 @@ private extension AppDebugSettingsViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = "Debug Settings"
+        navigationItem.title = "Settings"
+        if let pageTitle = pageTitle {
+            navigationItem.title = pageTitle
+        }
+
         let rightItem = UIBarButtonItem.init(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
         navigationItem.rightBarButtonItem = rightItem
     }
