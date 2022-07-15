@@ -13,9 +13,15 @@ private enum AppDebugSettingsCellIdentifier: String {
 }
 
 public struct AppSettingsViewConfiguration {
-    let actions: [AppSettingsAction] = []
-    let settings: [AppSettingsEntry] = []
-    let pageTitle: String? = nil
+    public var actions: [AppSettingsAction] = []
+    public var settings: [AppSettingsEntry] = []
+    public var pageTitle: String? = nil
+
+    public init(actions: [AppSettingsAction], settings: [AppSettingsEntry], pageTitle: String? = nil) {
+        self.actions = actions
+        self.settings = settings
+        self.pageTitle = pageTitle
+    }
 }
 
 public final class AppDebugSettingsViewController: UITableViewController {
