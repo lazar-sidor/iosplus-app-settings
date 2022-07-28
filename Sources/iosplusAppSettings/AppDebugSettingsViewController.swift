@@ -4,6 +4,7 @@
 //  Created by Lazar Sidor on 13.01.2022.
 //
 
+#if os(iOS)
 import UIKit
 import SafariServices
 
@@ -174,3 +175,4 @@ private extension AppDebugSettingsViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+#endif

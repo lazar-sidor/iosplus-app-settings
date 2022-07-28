@@ -27,7 +27,9 @@ public final class AppAppearance {
         let value: AppAppearanceType = currentValue() as! AppAppearanceType
         if value == .system {
             if #available(iOS 12.0, *) {
+                #if os(iOS)
                 return UIScreen.main.traitCollection.userInterfaceStyle == .dark
+                #endif
             } else {
                 // Fallback on earlier versions
             }
