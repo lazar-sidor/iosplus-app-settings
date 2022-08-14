@@ -103,6 +103,20 @@ extension AppLanguage: AppSettingsEntry {
             return AppLanguageType(localeId: keyValueStore.value(forKey: key)!)
         }
 
+        let defaultType: AppLanguageType = AppLanguageType.defaultValue()
+        let deviceIdentifier = Locale.current.identifier
+        if supportedLocaleIdentifiers.contains(deviceIdentifier) {
+            return AppLanguageType(localeId: deviceIdentifier)
+        }
+
+        if supportedLocaleIdentifiers.contains(defaultType.localeIdentifier) {
+            return defaultType
+        }
+
+        if let firstSupportedIdentifier = supportedLocaleIdentifiers.first {
+            return AppLanguageType(localeId: firstSupportedIdentifier)
+        }
+
         return AppLanguageType.defaultValue()
     }
     
@@ -149,5 +163,9 @@ extension AppLanguage: AppSettingsEntry {
 
     public func clear() {
         keyValueStore.removeValue(forKey: persistentKey())
+    }
+
+    public func save(with localeId: String) {
+        keyValueStore.insert(localeId, forKey: persistentKey())
     }
 }
