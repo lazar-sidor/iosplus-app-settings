@@ -32,8 +32,7 @@ public final class AppDebugSettingsViewController: UITableViewController {
     var pageTitle: String? = nil
     
     public static func showAppSettings(configuration: AppSettingsViewConfiguration, context: UIViewController, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
-        let controller = AppDebugSettingsViewController(configuration: configuration)
-        controller.selection = selectionBlock
+        let controller = AppDebugSettingsViewController(configuration: configuration, selectionBlock: selectionBlock)
         
         let settingsNavigation = UINavigationController.init(rootViewController: controller)
         settingsNavigation.modalPresentationStyle = .fullScreen
@@ -41,7 +40,7 @@ public final class AppDebugSettingsViewController: UITableViewController {
         context.present(settingsNavigation, animated: true, completion: nil)
     }
     
-    public convenience init(configuration: AppSettingsViewConfiguration) {
+    public convenience init(configuration: AppSettingsViewConfiguration, selectionBlock: @escaping ((_ updated: Bool) -> Void)) {
         if #available(iOS 13.0, *) {
             self.init(style: .insetGrouped)
         } else {
@@ -51,6 +50,7 @@ public final class AppDebugSettingsViewController: UITableViewController {
         self.settings = configuration.settings
         self.actions = configuration.actions
         self.pageTitle = configuration.pageTitle
+        self.selection = selectionBlock
     }
     
     override init(style: UITableView.Style) {

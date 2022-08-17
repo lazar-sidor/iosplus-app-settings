@@ -57,7 +57,7 @@ public final class AppLanguageType: NSObject {
 public final class AppLanguage {
     private var supportedLocaleIdentifiers: [String] = []
     private var keyValueStore: PersistentKeyValueStore
-    private var displayedTitle: String
+    public var displayedTitle: String
     
     public init() {
         supportedLocaleIdentifiers = NSLocale.availableLocaleIdentifiers
@@ -65,14 +65,10 @@ public final class AppLanguage {
         self.displayedTitle = "Language"
     }
     
-    public convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore, displayedTitle: String? = nil) {
+    public convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore) {
         self.init()
         self.supportedLocaleIdentifiers = localeIdentifiers
         self.keyValueStore = keyValueStore
-
-        if let displayedTitle = displayedTitle {
-            self.displayedTitle = displayedTitle
-        }
     }
     
     public func currentLanguageCode() -> String {
