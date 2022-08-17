@@ -57,16 +57,22 @@ public final class AppLanguageType: NSObject {
 public final class AppLanguage {
     private var supportedLocaleIdentifiers: [String] = []
     private var keyValueStore: PersistentKeyValueStore
+    private var displayedTitle: String
     
     public init() {
         supportedLocaleIdentifiers = NSLocale.availableLocaleIdentifiers
         self.keyValueStore = PersistentKeyValueStore(defaults: UserDefaults.standard)
+        self.displayedTitle = "Language"
     }
     
-    public convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore) {
+    public convenience init(localeIdentifiers: [String], keyValueStore: PersistentKeyValueStore, displayedTitle: String? = nil) {
         self.init()
         self.supportedLocaleIdentifiers = localeIdentifiers
         self.keyValueStore = keyValueStore
+
+        if let displayedTitle = displayedTitle {
+            self.displayedTitle = displayedTitle
+        }
     }
     
     public func currentLanguageCode() -> String {
@@ -125,7 +131,7 @@ extension AppLanguage: AppSettingsEntry {
     }
 
     public func title() -> String {
-        return "Language"
+        return displayedTitle
     }
 
     public func selectionType() -> AppSettingSelectionType {
@@ -154,6 +160,15 @@ extension AppLanguage: AppSettingsEntry {
         }
 
         return localeId
+    }
+
+    public func localizedCurentValue() -> String? {
+        let localeId = (currentValue() as! AppLanguageType).localeIdentifier
+        if let index = supportedLocaleIdentifiers.firstIndex(of: localeId) {
+            return displayNameForOptionAtIndex(index)
+        }
+
+        return nil
     }
 
     public func saveWithSupportedValue(at index: Int) {
