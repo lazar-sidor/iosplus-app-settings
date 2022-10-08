@@ -35,7 +35,9 @@ final public class SingleSelectionSettingsEntry: AppSettingsEntry {
     
     public func currentValue() -> Any? {
         if keyValueStore.hasValue(forKey: persistentKey()) {
-            return Int(keyValueStore.value(forKey: persistentKey())!)!
+            if let savedIntValue: Int = keyValueStore.value(forKey: persistentKey()) {
+                return savedIntValue
+            }
         }
         
         return defaultOption.intValue
@@ -59,7 +61,11 @@ final public class SingleSelectionSettingsEntry: AppSettingsEntry {
     
     public func hasSelectedOptionAtIndex(_ index: Int) -> Bool {
         let option = options[index]
-        return option.intValue == currentValue() as! Int
+        if let curentValueAsInt = currentValue() as? Int {
+            return option.intValue == curentValueAsInt
+        }
+
+        return false
     }
     
     public func displayNameForOptionAtIndex(_ index: Int) -> String {
